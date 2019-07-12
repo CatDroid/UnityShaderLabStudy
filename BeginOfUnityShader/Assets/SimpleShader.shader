@@ -10,6 +10,7 @@ Shader "Custom/SimpleShader"
 		SubShader{
 			Pass {
 			CGPROGRAM
+	#pragma enable_d3d11_debug_symbols // 使用Visual Studio调试Shader
 	#pragma vertex vert
 	#pragma fragment frag
 
