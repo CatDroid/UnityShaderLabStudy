@@ -5,7 +5,7 @@
         //_Ambient ("Ambient", Color) = (1,1,1,1)     // 所有物体都使用的环境光
         _Diffuse ("Diffuse", Color) = (1,1,1,1)     // 物体表面的漫反射系数  Cdiffuse = (Clight * Mdiffuse) max (0, n * l)
         _Specular ("Specular", Color) = (0.25,0.25,0.25,0.25)   // 物体表面的镜面系数    Cspecular= (Clight * Mspecular) max (0, r * l)^(Mgloss) 
-        _Glossiness ("Glossiness", Range(8.0,256.0)) = 20.0 // 物体表面的光泽度/反光度 Mgloss 控制高光区域的亮点 Mgloss越大亮点越小  
+		_Gloss("Glossiness", Range(8.0,256.0)) = 20.0 // 物体表面的光泽度/反光度 Mgloss 控制高光区域的亮点 Mgloss越大亮点越小  
     }
     SubShader
     {
@@ -28,7 +28,7 @@
             // float4 _Ambient ;
             float4 _Diffuse ;
             float4 _Specular;
-            float _Glossiness;
+            float _Gloss;
 
             struct appData {
                 float4 vertex : POSITION ; 
@@ -56,7 +56,7 @@
                 //float3 ambient = _Ambient ;
                 float3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz ;
                 float3 diffuse = _LightColor0.rgb * _Diffuse.rgb * max( 0, dot( worldNormal, directionLight ) ) ;
-                float3 specular =  _LightColor0.rgb * _Specular.rgb * pow( max( 0, dot( viewDir, reflectDir ) ), _Glossiness);
+                float3 specular =  _LightColor0.rgb * _Specular.rgb * pow( max( 0, dot( viewDir, reflectDir ) ), _Gloss);
 
 
                 output.color = ambient + diffuse + specular ;
@@ -64,6 +64,7 @@
                 return output ;
             } 
             // 高光反射部分是个非线性计算 在顶点着色器中计算光照再插值的过程是线性的 破坏了源计算的非线性  高光部分不平滑
+			// hhl:目前只是看到高光部分的边缘不是很圆滑过渡
 
 
             float4 frag(v2f input): SV_Target 
