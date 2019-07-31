@@ -62,10 +62,10 @@
 
 				float3 halfVector = normalize(viewDir + _WorldSpaceLightPos0.xyz);
 
-				float3 texColor = tex2D(_MainTex, input.uv).rgb * _Color.rgb ;
+				float3 albedo = tex2D(_MainTex, input.uv).rgb * _Color.rgb ; // 纹理颜色+色调控制=材质的反射系数
 
-				float3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz * texColor;
-				float3 diffuse = _LightColor0.rgb * texColor * max(0, dot(worldNormal, worldLight));
+				float3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz * albedo; // 环境光 也跟纹理颜色相关
+				float3 diffuse = _LightColor0.rgb * albedo * max(0, dot(worldNormal, worldLight));
 				float3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0,dot(worldNormal, halfVector)), _Gloss);
 
 				return float4(ambient + diffuse + specular, 1.0);
