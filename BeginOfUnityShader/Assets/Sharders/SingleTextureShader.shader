@@ -40,6 +40,7 @@
 			float _Gloss;
 			sampler2D _MainTex;  // 纹理
 			float4 _MainTex_ST;  // 纹理属性(缩放S和位移T) 变量名字一定是 纹理名字_ST xy是缩放 zw是位移 
+			float4 _Color;		 // 控制纹理图的整体色调  纹理颜色*色调控制 = 材质的漫反射系数
 
 			v2f vert(a2v input)
 			{
@@ -61,7 +62,7 @@
 
 				float3 halfVector = normalize(viewDir + _WorldSpaceLightPos0.xyz);
 
-				float3 texColor = tex2D(_MainTex, input.uv).rgb;
+				float3 texColor = tex2D(_MainTex, input.uv).rgb * _Color.rgb ;
 
 				float3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz * texColor;
 				float3 diffuse = _LightColor0.rgb * texColor * max(0, dot(worldNormal, worldLight));
