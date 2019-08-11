@@ -5,7 +5,7 @@
 		_Color("Color Tint",Color) = (1,1,1,1) 
 		_MainTex("Main Tex", 2D) = "white" {}  
 		_BumpMapTex("Normal Bump Tex",2D) = "bump" {}	// 用于凹凸映射的法线纹理 bump内置法线纹理 没有提供的话 bump对应模型自带的法线信息
-		_BumpScale("Bump Scale",Float) = 1.0			// 控制凹凸程度
+		_BumpScale("Bump Scale",Float) = 1.0			// 控制凹凸程度 
 		_Specular("Specular", Color) = (1,1,1,1)
 		_Gloss("Gloss", Range(8,256)) = 20
 	}
@@ -105,7 +105,7 @@
 				bump.xy = tex2D(_BumpMapTex, input.uv.zw).xy ; // 0~1 
 				bump.xy = bump.xy * 2.0 - 1.0;	// tangentNormal = UnpackNormal(packedNormal);
 				bump.xy *= _BumpScale;			// _BumpScale = 0 那么z=1 就是0,0,1 跟模型法线一致
-				bump.z = 1.0 - sqrt( max(0.0 , dot(bump.xy, bump.xy))); // z = sqrt(1- (x^2+y^2))
+				bump.z = sqrt( max(0.0,  1.0 - dot(bump.xy, bump.xy))); // z = sqrt(1- (x^2+y^2))
 
 				// 如果Unity把纹理图设置为法线纹理图(NormalMap)，而不是普通纹理图(Default)
 				// UnpackNormal
