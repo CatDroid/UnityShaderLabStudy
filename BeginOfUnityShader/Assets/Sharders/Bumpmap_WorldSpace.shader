@@ -80,7 +80,7 @@
 				float3 normalTangentSpace = tex2D(_BumpMapTex, input.texuvst.zw);
 				normalTangentSpace.xy = normalTangentSpace.xy * 2.0 - 1.0;
 				normalTangentSpace.xy = normalTangentSpace.xy * _BumpScale; // _BumpScale之后 会导致法线纹理中的法线不是单位向量
-				normalTangentSpace.z = sqrt( 1.0 - saturate(dot(normalTangentSpace.xy, normalTangentSpace.xy))  );
+				normalTangentSpace.z = sqrt( 1.0 - saturate(dot(normalTangentSpace.xy, normalTangentSpace.xy)));
 				// saturate =  opengl clamp(x,0.0,1.0) 
 
 				float3x3 TangentToObject = 
