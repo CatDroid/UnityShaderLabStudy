@@ -981,7 +981,7 @@ GameObject:
   - component: {fileID: 1788204867}
   - component: {fileID: 1788204866}
   m_Layer: 0
-  m_Name: Capsule (1)
+  m_Name: MaskTextureCtrlHighLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
