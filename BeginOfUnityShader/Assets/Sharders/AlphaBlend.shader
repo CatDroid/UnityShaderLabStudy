@@ -13,7 +13,7 @@
 		Tags
 		{
 			"Queue" = "Transparent"
-			"ignoreProjector" = "true"
+			"ignoreProjector" = "True"
 			"RenderType" = "Transparent"
 		}
 
@@ -45,7 +45,7 @@
 
 			struct v2f
 			{
-				float4 pos : SV_POSITION;
+				float4 pos : SV_Position;
 				float3 worldLightDir: TEXCOORD0;
 				float3 worldNormal : TEXCOORD1;
 				float2 texcoord : TEXCOORD2;
