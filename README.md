@@ -31,3 +31,41 @@
 * 透明度边界处有锯齿，所以透明效果在边缘处参差不齐，因为边界处纹理的透明度的变化精度问题
 
 ![1566087896832](透明度边界处有锯齿.png)
+
+
+
+### 复杂遮挡关系的模型 使用 开启深度写入的半透明效果
+
+* 开启深度写入的半透明效果: 第一打开深度写入 关闭颜色写入ColorMask 0 ; 第二次关闭深度写入 打开颜色写入 
+
+* 这样可以处理 模型本身有复杂的遮挡关系，或者包含复杂的非凸网络的时候
+
+* 因为在cpu端，无法对模型进行像素级排序
+
+* 在unity中，可以不自己写shader来实现模型深度写入，SubShader会一个个Pass执行
+
+  ```
+  		Pass
+  		{
+  			ZWrite On
+  			ColorMask 0  // ColorMask A | RGB | 0 
+  			// 不需要shader去做片元着色 只是写入深度信息
+  		} 
+  		Pass
+  		{
+               Tags 
+  			{
+  				"LightMode" = "ForwardBase"
+  			}
+  			ZWrite Off
+  			ColorMask RGBA
+  			Blend SrcAlpha OneMinusSrcAlpha
+  			
+  			CGPROGRAM
+  			..... 片元和顶点着色器 
+  			ENDCG
+  			
+  		}
+  ```
+
+  
