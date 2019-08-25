@@ -68,4 +68,20 @@
   		}
   ```
 
-  
+
+
+
+
+
+### 面剔除
+
+* [面剔除 Face culling]: https://learnopengl-cn.readthedocs.io/zh/latest/04%20Advanced%20OpenGL/04%20Face%20culling/
+
+* 三个设置
+
+  * 设置正面是逆时针 ( 默认 glFrontFace(GL_CCW); ) ，还是顺时针( GL_CW )，
+  * 剔除正面还是反面 (  glCullFace(GL_BACK);  ) 
+  * 开关面剔除 glEnable( GL_CULL_FACE );  默认关闭 
+
+* Unity3d 中 Quad 是一个平面正方形 ，Unity在默认情况下渲染引擎剔除了物体背面
+
