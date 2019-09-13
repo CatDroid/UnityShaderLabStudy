@@ -2,8 +2,8 @@
 {
 	Properties
 	{
-		_Color("Color", Color) = (1,1,1,1)
-		_Gloss("Smoothness", Range(0,255)) = 20
+		_Diffuse("Diffuse", Color) = (1,1,1,1)
+		_Gloss("Smoothness", Range(8,255)) = 20
 		_Specular("Specular",Color) = (1,1,1,1)
 	}
 
@@ -31,7 +31,7 @@
 #pragma vertex vert
 #pragma fragment frag
 
-			float4 _Color;
+			float4 _Diffuse;
 			float4 _Specular;
 			float _Gloss;
 			
@@ -64,11 +64,11 @@
 				float3 worldNormal = normalize(input.normal);
 
 				float3 lightDir = normalize(_WorldSpaceLightPos0.xyz); // directional light
-				float3 viewDir =  _WorldSpaceCameraPos.xyz - worldPos;
+				float3 viewDir = normalize(_WorldSpaceCameraPos.xyz - worldPos);
 
 
 				float3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
-				float3 diffuse = _LightColor0.rgb * _Color.rgb * saturate( dot(lightDir, worldNormal) );
+				float3 diffuse = _LightColor0.rgb * _Diffuse.rgb * saturate( dot(lightDir, worldNormal) );
 
 				float3 halfVector = normalize(viewDir + lightDir);
 				float3 specular= _LightColor0.rgb * _Specular.rgb * pow(saturate(dot(halfVector, worldNormal)), _Gloss);
