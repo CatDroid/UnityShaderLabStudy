@@ -228,7 +228,13 @@ GrassBillboard: terrain engine billboarded grass. 地形引擎何中的广告牌
 
     
 
-    
+    ### 粒子系统
+
+    * [Unity之粒子特效参数详解1]: https://www.cnblogs.com/yikecaidechengzhangshi/p/6991750.html
+
+    * [Unity之粒子特效参数详解2]: http://www.cnblogs.com/yikecaidechengzhangshi/p/6994408.html
+
+      
 
     
 
