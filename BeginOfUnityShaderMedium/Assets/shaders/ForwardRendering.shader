@@ -170,8 +170,23 @@ Shader "Custom/ForwardRendering"
 #if defined (POINT)
 				// 顶点位置 从世界空间 转 光源空间  unity_WorldToLight 替换掉了 _LightMatrix0
 				float3 lightCoord = mul(unity_WorldToLight, float4(worldPos, 1)).xyz;
-				fixed attenuation = tex2D(_LightTexture0, dot(lightCoord, lightCoord).rr).UNITY_ATTEN_CHANNEL;
+				// LUT方式 计算光线衰减  dot 得到的是 顶点与光源之间的距离 (没开方) 也就是平方和  
+				// .rr  衰减纹理图的对角线 
+				// 0,0 代表 光源处的衰减 
+				// 1,1 代表 光源空间中所关心的距离最远的点的衰减 
+				// 使用的是坐标点 与 原点 距离的平方，避免开方操作 
+				// UNITY_ATTEN_CHANNEL 衰减纹理中 衰减值 所在的分量
+				float attenuation = tex2D(_LightTexture0, dot(lightCoord, lightCoord).rr).UNITY_ATTEN_CHANNEL;
+
+				//float distance = sqrt( dot(lightCoord, lightCoord) ) ;
+				//if (distance > 1.0 ) {
+				//	return float4( 1.,  0.,  0.,  1.);
+				//} 
+				// 只保留一个点光源，其他光源设置为not-import(用逐顶点/sh方式照亮物体)，然后拖动点光源 观察capsule颜色会变红
+				// 光照矩阵 转换后 会发现有些点会在距离1.0以外的 
 #elif defined (SPOT)
+				// Unity默认使用Lut的方法来计算逐像素的点光源和聚光灯的衰减 
+				// 使用LUT纹理得到衰减，需要 预处理 和 采样纹理尺寸 影响 衰减精度 
 				float4 lightCoord = mul(unity_WorldToLight, float4(worldPos, 1));
 				fixed attenuation = (lightCoord.z > 0) *
 					tex2D(_LightTexture0, lightCoord.xy / lightCoord.w + 0.5).w 
@@ -179,7 +194,7 @@ Shader "Custom/ForwardRendering"
 					tex2D(_LightTextureB0, dot(lightCoord, lightCoord).rr).UNITY_ATTEN_CHANNEL;
 #else
 				// 对于非  聚光灯 点光源 ，其他光源衰减都是1.0   
-				fixed attenuation = 1.0;
+				float attenuation = 1.0;
 #endif // POINT SPOT
 
 #endif // USING_DIRECTION_LIGHT

@@ -224,6 +224,15 @@ GrassBillboard: terrain engine billboarded grass. 地形引擎何中的广告牌
     * 环境光/自发光，只在 Base Pass片元中 计算一次  Addtional Pass不作计算
     * Bass Pass 中处理最重要的平行光 ；如果场景中有多个平行光，unity会选择最亮的给到BassPass做逐像素处理，其他平行光会按照在Bass Pass逐顶点或在Additional Pass 中逐像素处理。如果场景中没有任何平行光，那么Bass Pass会当做全黑的光源处理。对于Base Pass来说，逐像素处理的一定是平行光
 
+  * 改变
+
+    ```
+    #include “AutoLight.cginc” 
+    
+    Upgrade NOTE: replaced ‘_LightMatrix0’ with ‘unity_WorldToLight’
+     
+    ```
+
     
 
     
