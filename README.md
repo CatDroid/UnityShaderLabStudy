@@ -265,7 +265,7 @@ GrassBillboard: terrain engine billboarded grass. 地形引擎何中的广告牌
 
     * 到处工程到Android Studio
 
-      * 包含 libunity.so  libil2cpp.so libmain.so 
+      * 包含 libunity.so  libil2cpp.so libmain.so  和 libs/unity-classes.jar 
 
       * UnityAndroidFirstDemo-0.1-v1.symbols.zip 符号库 (非常大) 
 
@@ -312,6 +312,22 @@ GrassBillboard: terrain engine billboarded grass. 地形引擎何中的广告牌
             	
             ```
 
+          * ```
+            //    bundle {
+            //        language {
+            //            enableSplit = false
+            //        }
+            //        density {
+            //            enableSplit = false
+            //        }
+            //        abi {
+            //            enableSplit = true
+            //        }
+            //    }
+            ```
+
+          * 
+
         * AndroidMainfest.xml
 
           * ```
@@ -328,3 +344,5 @@ GrassBillboard: terrain engine billboarded grass. 地形引擎何中的广告牌
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
             ```
+
+        

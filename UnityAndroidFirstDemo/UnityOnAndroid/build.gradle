@@ -21,7 +21,7 @@ allprojects {
     }
 }
 
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 
 dependencies {
@@ -38,9 +38,9 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 15
         targetSdkVersion 28
-        applicationId 'com.hanlon.firstDemo'
+        //applicationId 'com.hanlon.firstDemo'
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
@@ -76,15 +76,15 @@ android {
         doNotStrip '*/arm64-v8a/*.so'
     }
 
-    bundle {
-        language {
-            enableSplit = false
-        }
-        density {
-            enableSplit = false
-        }
-        abi {
-            enableSplit = true
-        }
-    }
+//    bundle {
+//        language {
+//            enableSplit = false
+//        }
+//        density {
+//            enableSplit = false
+//        }
+//        abi {
+//            enableSplit = true
+//        }
+//    }
 }
