@@ -1,0 +1,4 @@
+include ':app'
+
+include ':unity'
+project(':unity').projectDir = new File(settingsDir, '../UnityOnAndroid/')
