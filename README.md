@@ -250,6 +250,7 @@ GrassBillboard: terrain engine billboarded grass. 地形引擎何中的广告牌
     ### Unity On Android
 
     * File->Build Settings，在弹出框的“Build System”下选择Android选项，勾选“Export Project” 
+
     * 如果没有安装android打包工具，将会提示下载，如下链接
 
     * [unity android打包工具]: http://download.unity3d.com/download_unity/d0e9f15437b1/TargetSupportInstaller/UnitySetup-Android-Support-for-Editor-2018.3.14f1.exe
@@ -259,3 +260,71 @@ GrassBillboard: terrain engine billboarded grass. 地形引擎何中的广告牌
     * 使用插件可以使C#脚本，直接调用android C/C++的函数，间接调用android java的函数 
 
     * Unity支持3个不同的脚本后端，根据不同的目标平台， Mono, .Net, IL2CPP ,  通用windows平台只支持.Net和IL2CPP 
+
+    * [Menu]--[Edit]--[Preferences]--[External Tools]--[Android]--[SDK/NDK location]
+
+    * 到处工程到Android Studio
+
+      * 包含 libunity.so  libil2cpp.so libmain.so 
+
+      * UnityAndroidFirstDemo-0.1-v1.symbols.zip 符号库 (非常大) 
+
+        ```
+        .
+        ├── arm64-v8a
+        │   ├── libil2cpp.so.debug
+        │   ├── libil2cpp.sym
+        │   └── libunity.sym.so
+        └── armeabi-v7a
+            ├── libil2cpp.so.debug
+            ├── libil2cpp.sym
+            └── libunity.sym.so
+        ```
+
+      * 
+
+      * ![1569156663591](Unity3D_导出Android工程Build设置.png)
+
+      * ![1569156531677](Unity3D_导出Android工程Player设置.png)
+
+      * 由于默认导出时Appliatcon模块，所以可以修改为Library模块
+
+        * Settings.gradle
+
+          * ```
+            include(':unity')
+            project(':unity').projectDir = new File(settingsDir,'../UnityOnAndroid/')
+            ```
+
+        * build.gradle
+
+          * ```
+            apply plugin: 'com.android.library'
+            ```
+
+          * 
+
+            ```
+            android {
+            	defaultConfig {
+            	...
+            	//applicationId 'com.hanlon.firstDemo'
+            	
+            ```
+
+        * AndroidMainfest.xml
+
+          * ```
+            <application 
+            去掉 
+            android:theme
+            android:icon
+            android:label
+            获取全部移动到 activity中
+            ```
+
+          * ```
+            去掉 UnityPlayerActivity 的
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+            ```
